@@ -1,19 +1,32 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { EventosRoutes } from './Routes'
+import { BrowserRouter } from 'react-router-dom'
 import './App.css';
+import {Toolbars} from './Components/Toolbar/Toolbars';
+import { EventoList } from './Components/EventoList';
+import { ComprarEntrada } from './Components/ComprarEntrada';
+
+
+
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">React - Hola mundo!</h1>
-          <h2>Tp de eventos!</h2>
-        </header>
-      </div>
-    );
+    <div>
+  <Toolbars></Toolbars>
+  <BrowserRouter>
+        
+          <EventosRoutes/>
+        
+        </BrowserRouter>
+        </div>
+    ) 
   }
 }
+      
+    export default App
 
-export default App;
+
+
+    
+
