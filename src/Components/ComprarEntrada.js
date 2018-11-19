@@ -7,15 +7,26 @@ import CardContent from '@material-ui/core/CardContent'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import { Container, Row, Col } from 'reactstrap';
-
+import { Evento } from "../Domain/Evento";
+import { EventoService } from "../Services/EventoService";
 
 library.add(faDollarSign)
+
+const eventoService = new EventoService()
 
 export class ComprarEntrada extends Component {
     constructor(props) {
         super(props)
-        this.state = { contador: 0 }
-      }
+        this.state = { contador: 0, evento:new Evento()}
+        this.initialize()  }
+    
+        generarError(errorMessage) {
+            console.log(errorMessage)
+            console.log("state", this.state)
+            this.setState({
+                errorMessage: errorMessage.toString()
+            })
+        }
     
       sumar() {
         this.cambiarContador(this.state.contador + 1)
@@ -29,14 +40,15 @@ export class ComprarEntrada extends Component {
         this.setState({ contador: n })
       }
 
-      async initialize() {
+     initialize() {
         try {
-            const response = await eventoService.getAllEventos()
+           
          
-            const tarea = await tareaService.getTareaById(this.props.match.params.id)
+            const evento = eventoService.getEventoById(this.props.match.params.id)
+            
+         
             this.setState({
-                usuarios: usuarios,
-                tarea: tarea
+         evento: evento
             })
         } catch (e) {
             this.generarError(e)
@@ -44,26 +56,26 @@ export class ComprarEntrada extends Component {
     }
    
     render() {
-
+        const evento = eventoService.getEventoById(this.props.match.params.id)
         return (
             
             <div>
                
-                <h1 align="center">NombreEvento</h1>
+                <h1 align="center">{evento.nombre}</h1>
                 <br />
                 <h1 align="center">
 
                     <CardContent>
-                        <FontAwesomeIcon icon="search-location" />Ubicacion del lugar <br />
+                        <FontAwesomeIcon icon="search-location" />{evento.lugar} <br />
                     </CardContent>
 
                     <CardContent>
-                        <FontAwesomeIcon icon="clock" />Hora de lugar <br />
+                        <FontAwesomeIcon icon="clock" />{evento.fecha}<br />
                     </CardContent>
 
                     <CardContent>
                         <Card>
-                        <FontAwesomeIcon icon="dollar-sign" />Precio <br />
+                        <FontAwesomeIcon icon="dollar-sign" />{evento.precioEntrada} <br />
                         </Card>
                     </CardContent>
              </h1>
@@ -86,11 +98,11 @@ export class ComprarEntrada extends Component {
          
          <Col>
           <br/>
-          <FontAwesomeIcon icon="dollar-sign"/>{this.state.contador*2}
+          <FontAwesomeIcon icon="dollar-sign"/>{this.state.contador*evento.precioEntrada}
           </Col>
          
           </Row>
-         <h1 align="center"><Button variant="contained" id="sumar" size="medium" color="primary" >Paga la pratita</Button> <br/></h1> 
+         <h1 align="center"><Button variant="contained" id="sumar" size="medium" color="primary" >Comprar Entrada</Button> <br/></h1> 
           </h2> 
          </Container>
          </div>

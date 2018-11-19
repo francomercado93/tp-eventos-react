@@ -8,6 +8,8 @@ const eventos = [
  
 ]
 
+var resultado=new Evento()
+
 export class EventoService {
 
     getAllEventos() { 
@@ -15,9 +17,11 @@ export class EventoService {
         return eventos 
     }
 
-    getEventosById(id){
-     return this.eventos.map((evento)=>evento.id)
-     
+    getEventoById(id){
+       
+     resultado= eventos.find(evento => evento.id==id)
+        
+        return resultado
     }
 
 
