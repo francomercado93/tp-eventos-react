@@ -10,11 +10,7 @@ export class EventoList extends Component {
 
 
         this.eventoService = new EventoService()
-        this.estate = {
-       
-            
-          
-        };
+     
         
              
      
@@ -24,7 +20,7 @@ export class EventoList extends Component {
     render() {
      
       const eventos=   this.eventoService.getAllEventos()
-     //const {eventos}=this.state.eventos
+    
       
         return (
             eventos.map(evento =>

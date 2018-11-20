@@ -64,6 +64,10 @@ export class ComprarEntrada extends Component {
                 <h1 align="center">{evento.nombre}</h1>
                 <br />
                 <h1 align="center">
+              
+                <CardContent>
+              {evento.nombre}<br />
+              </CardContent>
 
                     <CardContent>
                         <FontAwesomeIcon icon="search-location" />{evento.lugar} <br />
@@ -75,7 +79,7 @@ export class ComprarEntrada extends Component {
 
                     <CardContent>
                         <Card>
-                        <FontAwesomeIcon icon="dollar-sign" />{evento.precioEntrada} <br />
+                        Precio por entrada:   <FontAwesomeIcon icon="dollar-sign" />{evento.precioEntrada} <br />
                         </Card>
                     </CardContent>
              </h1>
@@ -102,6 +106,8 @@ export class ComprarEntrada extends Component {
           </Col>
          
           </Row>
+          <br/>
+          <br/>
          <h1 align="center"><Button variant="contained" id="sumar" size="medium" color="primary" >Comprar Entrada</Button> <br/></h1> 
           </h2> 
          </Container>

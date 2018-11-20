@@ -3,8 +3,7 @@ import { EventosRoutes } from './Routes'
 import { BrowserRouter } from 'react-router-dom'
 import './App.css';
 import {Toolbars} from './Components/Toolbar/Toolbars';
-import { EventoList } from './Components/EventoList';
-import { ComprarEntrada } from './Components/ComprarEntrada';
+
 
 
 
@@ -14,8 +13,9 @@ class App extends Component {
     return (
     <div>
   <Toolbars></Toolbars>
+  <br/> <br/> <br/> <br/> <br/> <br/>
   <BrowserRouter>
-        
+         
           <EventosRoutes/>
         
         </BrowserRouter>
