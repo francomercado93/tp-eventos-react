@@ -82,7 +82,7 @@ export class ComprarEntrada extends Component {
        
           <Typography gutterBottom variant="title" component="h2">
            </Typography>
-          <h3 id="contadorValue"></h3>
+          {/* <h3 id="contadorValue"></h3> */}
 
           <Container fluid>  
 

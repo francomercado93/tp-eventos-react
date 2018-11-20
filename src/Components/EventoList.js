@@ -1,38 +1,30 @@
 import React, { Component } from 'react'
 import { EventosRow } from './EventoRow'
-import {EventoService }from "../Services/EventoService"
+import { EventoService } from "../Services/EventoService"
+import Paper from '@material-ui/core/Paper'
 
 
 export class EventoList extends Component {
 
     constructor(props) {
         super(props);
-
-
         this.eventoService = new EventoService()
-        this.estate = {
-       
-            
-          
+        this.state = {
+            eventos: this.eventoService.getAllEventos()
         };
-        
-             
-     
     }
 
-
     render() {
-     
-      const eventos=   this.eventoService.getAllEventos()
-     //const {eventos}=this.state.eventos
-      
         return (
-            eventos.map(evento =>
-                <EventosRow evento={evento} key={evento.nombre}/>
-            )
-
-         );
-        }
-
-       }
+            <Paper>
+                <br />
+                <br />
+                <br />
+                {this.state.eventos.map(evento =>
+                    <EventosRow evento={evento} key={evento.nombre} />
+                )}
+            </Paper>
+        )
+    }
+}
 
