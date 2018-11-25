@@ -17,9 +17,6 @@ export class EventoList extends Component {
     render() {
         return (
             <Paper>
-                <br />
-                <br />
-                <br />
                 {this.state.eventos.map(evento =>
                     <EventosRow evento={evento} key={evento.nombre} />
                 )}

@@ -5,3 +5,5 @@ export class Usuario {
     }
 }
 export default (Usuario)
+
+export const UsuarioNulo = new Usuario("")

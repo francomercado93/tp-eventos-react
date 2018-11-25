@@ -9,3 +9,5 @@ export class Evento {
 }
 
 export default (Evento)
+
+export const EventoNulo = new Evento("")
