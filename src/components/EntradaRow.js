@@ -16,9 +16,9 @@ export class EntradaRow extends Component {
                 <Card>
                     <CardContent>
                         <h3>
-                            {this.props.entrada.evento.nombre}<br /><br />
+                            {this.props.entrada.evento.nombreEvento}<br /><br />
                             <div>
-                                <div align="left"><FontAwesomeIcon icon="clock" /> {this.props.entrada.evento.fecha}&nbsp;&nbsp;</div>
+                                <div align="left"><FontAwesomeIcon icon="clock" /> {this.props.entrada.evento.inicioEvento}&nbsp;&nbsp;</div>
                                 <div align="right">
                                     <Button size="medium" id="Devolver entrada" color="inherit" variant='fab'>
                                         <FontAwesomeIcon icon="undo" />

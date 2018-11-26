@@ -1,19 +1,17 @@
-import { Evento } from "./Evento";
-import { Usuario } from "./Usuario"
+import { Evento, EventoNulo } from "./Evento";
 
 export class Entrada {
-    constructor(unEvento, unAsistente, id) {
-        this.evento = unEvento
-        this.asistente = unAsistente
-        this.id = id
+    constructor() {
+        this.id = 0
+        this.evento = EventoNulo
+
     }
-    asignarEvento(evento, lugar, fechaInicio, id, valorEntrada) {
-        this.evento = new Evento(evento, lugar, fechaInicio, id, valorEntrada)
-    }
-    asignarAsistente(usuario) {
-        this.asistente = new Usuario(usuario)
-    }
-    asignarId(id) {
-        this.id = id
+    static fromJson(entradaJson) {
+        const result = new Entrada()
+        for (let key in entradaJson) {
+            result[key] = entradaJson[key]
+        }
+        result.evento = Evento.fromJSON(entradaJson.evento)
+        return result
     }
 }

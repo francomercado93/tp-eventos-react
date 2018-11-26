@@ -1,10 +1,19 @@
 export class Evento {
-    constructor(nombre, lugar, fecha, id, precioEntrada) {
-        this.nombre = nombre
-        this.lugar = lugar
-        this.fecha = fecha
-        this.id = id
-        this.precioEntrada = precioEntrada
+    constructor() {
+        this.nombreEvento = ""
+        this.edadMinima = 0
+        this.valorEntrada = 0
+        this.capacidadMaxima = 0
+        this.locacion = ""
+        this.inicioEvento = ""
+        this.organizadorEvento = ""
+        this.finEvento = ""
+        this.fechaMaximaConfirmacion = ""
+    }
+    static fromJSON(eventoJson) {
+        const result = Object.assign(new Evento(), eventoJson)
+        console.log(result)
+        return result
     }
 }
 
