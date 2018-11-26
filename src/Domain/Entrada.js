@@ -4,6 +4,7 @@ export class Entrada {
     constructor() {
         this.id = 0
         this.evento = EventoNulo
+        this.cantidad = 0
 
     }
     static fromJson(entradaJson) {
@@ -12,6 +13,11 @@ export class Entrada {
             result[key] = entradaJson[key]
         }
         result.evento = Evento.fromJSON(entradaJson.evento)
+        return result
+    }
+
+    toJSON() {
+        const result = Object.assign({}, this)
         return result
     }
 }

@@ -10,13 +10,17 @@ export class Evento {
         this.finEvento = ""
         this.fechaMaximaConfirmacion = ""
     }
+
     static fromJSON(eventoJson) {
         const result = Object.assign(new Evento(), eventoJson)
-        console.log(result)
         return result
     }
-}
 
+    diasfechaMaximaConfirmacion(usuario) {
+        return 1
+        // (Duration.between(unUsuario.fechaHoraActual, this.fechaMaximaConfirmacion)).getSeconds() / 86400
+    }
+}
 export default (Evento)
 
 export const EventoNulo = new Evento("")

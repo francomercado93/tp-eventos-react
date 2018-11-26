@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { EventosRow } from './EventoRow'
+// import { EventosRow } from './EventoRow'
 import { EventoService } from "../Services/EventoService"
 import Paper from '@material-ui/core/Paper'
 
@@ -17,9 +17,9 @@ export class EventoList extends Component {
     render() {
         return (
             <Paper>
-                {this.state.eventos.map(evento =>
+                {/* {this.state.eventos.map(evento =>
                     <EventosRow evento={evento} key={evento.nombre} />
-                )}
+                )} */}
             </Paper>
         )
     }

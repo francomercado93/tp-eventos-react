@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCalendarCheck, faTicketAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
+// import PropTypes from 'prop-types';
 import Drawer from '@material-ui/core/Drawer';
 import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
@@ -14,11 +13,11 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
-// import PropTypes from 'prop-types';
-
+import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import { UsuarioCard } from './UsuarioCard'
 
 library.add(faCalendarCheck, faTicketAlt)
-export const USRID = 0;
 
 // const theme = createMuiTheme({
 //   typography: {
@@ -55,12 +54,9 @@ export const USRID = 0;
 
 // };
 
+
 class Toolbars extends Component {
-  // constructor(props) {
-  //   super(props)
-  //   this.usuarioService = new UsuarioService()
-  //   this.usuario = this.usuarioService.getUsuarioByID(0)
-  // }
+
   state = {
     left: false,
   };
@@ -74,14 +70,7 @@ class Toolbars extends Component {
     // const { classes } = this.props;
     const sideList = (
       <div >
-        {/* <Card >
-          <List>
-            <ListItem>
-              <Avatar alt="Agustin5" src={imgPerfil}></Avatar>
-              <ListItemText primary={this.usuario.nombreUsuario} secondary={this.usuario.mail} />
-            </ListItem>
-          </List>
-        </Card> */}
+        <UsuarioCard />
         <List>
           <ListItem button key={'Eventos interesantes'}>
             <Button onClick={() => this.props.history.push('/')}>
@@ -100,15 +89,6 @@ class Toolbars extends Component {
               <ListItemText primary={'Mis entradas'} />
             </Button>
           </ListItem>
-
-
-          {/* {['Eventos interesantes', 'Mis entradas'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <FontAwesomeIcon icon="calendar-check" /> : <FontAwesomeIcon icon="ticket-alt" />}</ListItemIcon>
-              <ListItemText primary={text} />
-              <FontAwesomeIcon icon="ticket-alt" />
-            </ListItem>
-          ))} */}
         </List>
       </div >
     );
