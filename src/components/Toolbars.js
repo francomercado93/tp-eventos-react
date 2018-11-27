@@ -16,43 +16,15 @@ import MenuIcon from '@material-ui/icons/Menu';
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { UsuarioCard } from './UsuarioCard'
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 library.add(faCalendarCheck, faTicketAlt)
 
-// const theme = createMuiTheme({
-//   typography: {
-//     useNextVariants: true,
-//   },
-//   palette: {
-//     primary: purple,
-//     secondary: {
-//       main: '#f44336',
-//     },
-//   },
-// });
-// const styles = {
-//   typography: {
-//     useNextVariants: true,
-//   },
-//   root: {
-//     flexGrow: 1,
-//     backgroundColor: theme.palette.secondary
-//   },
-//   grow: {
-//     flexGrow: 1,
-//   },
-
-//   menuButton: {
-//     marginLeft: -12,
-//     marginRight: 20,
-//   },
-
-//   bigAvatar: {
-//     width: 200,
-//     height: 200,
-//   },
-
-// };
+const theme = createMuiTheme({
+  typography: {
+    useNextVariants: true
+  }
+});
 
 
 class Toolbars extends Component {
@@ -67,7 +39,6 @@ class Toolbars extends Component {
     });
   };
   render() {
-    // const { classes } = this.props;
     const sideList = (
       <div >
         <UsuarioCard />
@@ -75,7 +46,7 @@ class Toolbars extends Component {
           <ListItem button key={'Eventos interesantes'}>
             <Button onClick={() => this.props.history.push('/')}>
               <ListItemIcon>
-                <FontAwesomeIcon icon="calendar-check" />
+                <FontAwesomeIcon icon="calendar-check" size="2x" />
               </ListItemIcon>
               <ListItemText primary={'Eventos interesantes'} />
             </Button>
@@ -84,7 +55,7 @@ class Toolbars extends Component {
           <ListItem button key={'Mis entradas'}>
             <Button onClick={() => this.props.history.push('/mis-entradas')}>
               <ListItemIcon>
-                <FontAwesomeIcon icon="ticket-alt" />
+                <FontAwesomeIcon icon="ticket-alt" size="2x" />
               </ListItemIcon>
               <ListItemText primary={'Mis entradas'} />
             </Button>
@@ -94,33 +65,31 @@ class Toolbars extends Component {
     );
 
     return (
-      < AppBar position="fixed" >
-        <Toolbar>
-          <IconButton className={this.props.menuButton} color="inherit" aria-label="Menu" onClick={this.toggleDrawer('left', true)}>
-            <MenuIcon />
-          </IconButton>
-          <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)}>
-            <div
-              tabIndex={0}
-              role="button"
-              onClick={this.toggleDrawer('left', false)}
-              onKeyDown={this.toggleDrawer('left', false)}
-            >
-              {sideList}
-            </div>
-          </Drawer>
-          <Typography variant="h6" color="inherit">
-            EventOS
+      <MuiThemeProvider theme={theme}>
+        < AppBar position="fixed" >
+          <Toolbar>
+            <IconButton className={this.props.menuButton} color="inherit" aria-label="Menu" onClick={this.toggleDrawer('left', true)}>
+              <MenuIcon />
+            </IconButton>
+            <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)}>
+              <div
+                tabIndex={0}
+                role="button"
+                onClick={this.toggleDrawer('left', false)}
+                onKeyDown={this.toggleDrawer('left', false)}
+              >
+                {sideList}
+              </div>
+            </Drawer>
+            <Typography variant="h6" color="inherit">
+              EventOS
           </Typography>
-        </Toolbar>
-      </AppBar >
+          </Toolbar>
+        </AppBar >
+      </MuiThemeProvider>
     );
   }
 }
 export default withRouter(Toolbars)
-// Toolbars.propTypes = {
-//   classes: PropTypes.object.isRequired,
-// };
-// withStyles(styles)(Toolbars)
-// withTheme(theme)(Toolbars)
+
 

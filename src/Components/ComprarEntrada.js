@@ -78,6 +78,7 @@ export class ComprarEntrada extends Component {
     volver() {
         this.props.history.push('/')
     }
+    
     generarError(errorMessage) {
         this.setState({
             errorMessage: errorMessage.toString()
