@@ -18,42 +18,43 @@ const styles = {
     },
 };
 const usuariosService = new UsuariosService()
+const entradasService = new EntradasService()
 
 export class MisEntradas extends Component {
     constructor(props) {
         super(props);
-        this.entradasService = new EntradasService()
+        this.eliminarEntrada = this.eliminarEntrada.bind(this)
         this.state = {
             usuario: new Usuario(),
             entradas: []
         }
     }
+    async eliminarEntrada(id) {
+        try {
+            const temporal = this.state.entradas.filter((entrada) => entrada.id !== id)
+            const usuario = await usuariosService.getUsuarioByID(USRID)
+            this.setState({
+                entradas: temporal,
+                usuario: usuario
+            })
+        } catch (e) {
+            this.errorHandler(e)
+        }
+    }
+
     async componentWillMount() {
         try {
             const usuario = await usuariosService.getUsuarioByID(USRID)
-            const res = await this.entradasService.getEntradasUsr(USRID)
+            const res = await entradasService.getEntradasUsr(USRID)
             const entradasJson = await res.json()
             this.setState({
                 usuario: usuario,
                 entradas: entradasJson.map((entradaJson) => Entrada.fromJson(entradaJson))
             })
-            // this.asignarEntradasUsr(this.state.entradas)
         } catch (e) {
             this.errorHandler(e)
         }
     }
-    // asignarEntradasUsr(entradasService) {
-    //     this.cambiarEstado((usuario) => usuario.entradas = entradasService)
-    // }
-
-    // cambiarEstado(closureChange) {
-    //     const usuario = this.state.usuario
-    //     closureChange(usuario)
-    //     this.setState({
-    //         usuario: usuario
-    //     })
-    // }
-
     errorHandler(errorMessage) {
         throw errorMessage
     }
@@ -63,7 +64,7 @@ export class MisEntradas extends Component {
             <Paper>
                 <Grid>
                     {this.state.entradas.map(entrada =>
-                        <EntradaRow entrada={entrada} key={entrada.id} />
+                        <EntradaRow entrada={entrada} key={entrada.id} eliminarEntrada={this.eliminarEntrada} />
                     )}
                 </Grid>
                 <Grid item style={styles.precioTotal}>

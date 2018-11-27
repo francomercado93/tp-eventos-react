@@ -1,25 +1,32 @@
 export class Evento {
     constructor() {
+        this.id = 0
         this.nombreEvento = ""
         this.edadMinima = 0
         this.valorEntrada = 0
         this.capacidadMaxima = 0
         this.locacion = ""
-        this.inicioEvento = ""
+        this.inicioEvento = new Date()
         this.organizadorEvento = ""
-        this.finEvento = ""
-        this.fechaMaximaConfirmacion = ""
+        this.finEvento = new Date()
+        this.fechaMaximaConfirmacion = new Date()
+        this.cantidadDisponibles = 0
     }
 
-    static fromJSON(eventoJson) {
+    static fromJson(eventoJson) {
         const result = Object.assign(new Evento(), eventoJson)
+        // for (let key in eventoJson) {
+        //     result[key] = eventoJson.id
+        // }
         return result
     }
 
-    diasfechaMaximaConfirmacion(usuario) {
+    diasfechaMaximaConfirmacion() {
         return 1
         // (Duration.between(unUsuario.fechaHoraActual, this.fechaMaximaConfirmacion)).getSeconds() / 86400
     }
+
+    
 }
 export default (Evento)
 

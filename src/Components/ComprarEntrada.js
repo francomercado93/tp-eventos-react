@@ -1,114 +1,189 @@
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faClock, faDollarSign, faMapMarkerAlt, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Typography } from "@material-ui/core";
+import Button from "@material-ui/core/Button";
+import CardContent from "@material-ui/core/CardContent";
+import Divider from '@material-ui/core/Divider';
+import Grid from "@material-ui/core/Grid";
+import Snackbar from '@material-ui/core/Snackbar';
 import React, { Component } from "react";
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faDollarSign } from '@fortawesome/free-solid-svg-icons'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-import Button from '@material-ui/core/Button'
-import Typography from '@material-ui/core/Typography'
-import { Container, Row, Col } from 'reactstrap';
-import { Evento } from "../Domain/Evento";
-import { EventoService } from "../Services/EventoService";
+import { Usuario } from '../Domain/Usuario';
+import { USRID } from '../Services/configuration';
+import { EventosService } from "../Services/EventosService";
+import { UsuariosService } from "../Services/UsuariosService";
+import { Entrada } from '../Domain/Entrada'
 
-library.add(faDollarSign)
+library.add(faMapMarkerAlt, faClock, faDollarSign, faSortUp, faSortDown)
 
-const eventoService = new EventoService()
+const styles = {
+    root: {
+        flexGrow: 1,
+    }
+};
 
 export class ComprarEntrada extends Component {
     constructor(props) {
-        super(props)
-        this.state = { contador: 0, evento:new Evento()}
-        this.initialize()  }
-    
-        generarError(errorMessage) {
-            console.log(errorMessage)
-            console.log("state", this.state)
-            this.setState({
-                errorMessage: errorMessage.toString()
-            })
-        }
-    
-      sumar() {
-        this.cambiarContador(this.state.contador + 1)
-      }
-    
-      restar() {
-        this.cambiarContador(this.state.contador - 1)
-      }
-    
-      cambiarContador(n) {
-        this.setState({ contador: n })
-      }
+        super(props);
+        this.eventoService = new EventosService();
+        this.usuariosService = new UsuariosService()
+        this.state = {
+            contador: 0,
+            usuario: new Usuario(),
+            evento: this.props.location.state,
+            errorMessage: ""
+        };
+    }
 
-     initialize() {
+    async componentWillMount() {
         try {
-           
-         
-            const evento = eventoService.getEventoById(this.props.match.params.id)
-            
-         
+            const usuario = await this.usuariosService.getUsuarioByID(USRID)
             this.setState({
-         evento: evento
+                usuario: usuario,
             })
+        } catch (e) {
+            this.errorHandler(e)
+        }
+    }
+    errorHandler(errorMessage) {
+        throw errorMessage
+    }
+
+    sumar() {
+        this.cambiarContador(this.state.contador + 1);
+    }
+
+    restar() {
+        if (this.state.contador > 0) {
+            this.cambiarContador(this.state.contador - 1);
+        }
+    }
+
+    cambiarContador(n) {
+        this.setState({ contador: n });
+    }
+
+    async comprarEntrada(evento) {
+        try {
+            this.state.usuario.puedeComprarEntrada(evento)
+            const entrada = new Entrada()
+            entrada.evento = this.state.evento
+            entrada.cantidad = this.state.contador
+            await this.usuariosService.usuarioCompraEntrada(USRID, entrada)
+            this.volver()
         } catch (e) {
             this.generarError(e)
         }
     }
-   
+    volver() {
+        this.props.history.push('/')
+    }
+    generarError(errorMessage) {
+        this.setState({
+            errorMessage: errorMessage.toString()
+        })
+
+    }
+    snackbarOpen() {
+        return this.state.errorMessage !== ""
+    }
+
+    cantidadNoValida() {
+        return this.state.contador === 0 || this.state.contador > this.state.evento.cantidadDisponibles
+    }
+
+    handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        this.setState({ errorMessage: "" });
+    };
+
     render() {
-        const evento = eventoService.getEventoById(this.props.match.params.id)
+        const comprarButton =
+            <Typography variant="button" gutterBottom align="center">
+                <Button disabled={this.cantidadNoValida()} variant="contained" id="sumar" size="medium" color="primary"
+                    onClick={event => { this.comprarEntrada(this.state.evento); }}>
+                    Comprar Entrada
+                        </Button>
+            </Typography>
         return (
-            
-            <div>
-               
-                <h1 align="center">{evento.nombre}</h1>
+            <div className={styles.root}>
                 <br />
-                <h1 align="center">
-
-                    <CardContent>
-                        <FontAwesomeIcon icon="search-location" />{evento.lugar} <br />
-                    </CardContent>
-
-                    <CardContent>
-                        <FontAwesomeIcon icon="clock" />{evento.fecha}<br />
-                    </CardContent>
-
-                    <CardContent>
-                        <Card>
-                        <FontAwesomeIcon icon="dollar-sign" />{evento.precioEntrada} <br />
-                        </Card>
-                    </CardContent>
-             </h1>
-       
-          <Typography gutterBottom variant="title" component="h2">
-           </Typography>
-          {/* <h3 id="contadorValue"></h3> */}
-
-          <Container fluid>  
-
-                
-         <h2>
-          <Row>
-         <Col></Col>
-          <Col>
-         <Button variant="contained" id="sumar" size="medium" color="primary" onClick={(event) => { this.sumar() }}>+</Button> <br/>
-         &nbsp;&nbsp; {this.state.contador} <br/>
-          <Button variant="contained" id="restar" size="medium" color="secondary" onClick={(event) => { this.restar() }}>-</Button>
-         </Col>
-         
-         <Col>
-          <br/>
-          <FontAwesomeIcon icon="dollar-sign"/>{this.state.contador*evento.precioEntrada}
-          </Col>
-         
-          </Row>
-         <h1 align="center"><Button variant="contained" id="sumar" size="medium" color="primary" >Comprar Entrada</Button> <br/></h1> 
-          </h2> 
-         </Container>
-         </div>
-
-        )
+                <br />
+                <Grid container spacing={0}>
+                    <Grid item xs={12}>
+                        <Typography variant="h3" gutterBottom align="center">
+                            {this.state.evento.nombreEvento}
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <CardContent>
+                            <Typography variant="h3" gutterBottom align="left">
+                                <FontAwesomeIcon icon="map-marker-alt" />
+                                {this.state.evento.locacion}
+                            </Typography>
+                        </CardContent>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <CardContent>
+                            <Typography variant="h5" gutterBottom align="left">
+                                <FontAwesomeIcon icon="clock" />
+                                {this.state.evento.inicioEvento} - {this.state.evento.finEvento}
+                            </Typography>
+                        </CardContent>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <CardContent>
+                            <Typography variant="h3" gutterBottom align="left">
+                                $ {this.state.evento.valorEntrada}
+                            </Typography>
+                        </CardContent>
+                        <Divider />
+                    </Grid>
+                    <Grid item xs={6}>
+                        <div align="center">
+                            <Button id="sumar" size="medium" color="inherit" onClick={event => { this.sumar(); }}>
+                                <FontAwesomeIcon icon="sort-up" size="3x" />
+                            </Button>
+                            <br />
+                            <Typography variant="h4" gutterBottom align="center">
+                                {this.state.contador}
+                            </Typography>
+                            <br />
+                            <Button id="restar" size="medium" color="secondary" disabled={this.state.contador === 0}
+                                onClick={event => { this.restar(); }}>
+                                <FontAwesomeIcon icon="sort-down" size="3x" />
+                            </Button>
+                        </div>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <br />
+                        <br />
+                        <Typography variant="h4" gutterBottom align="left">
+                            $ {this.state.contador * this.state.evento.valorEntrada}
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                        {comprarButton}
+                    </Grid>
+                </Grid>
+                <Snackbar
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
+                    }}
+                    open={this.snackbarOpen()}
+                    autoHideDuration={2000}
+                    onClose={this.handleClose}
+                    ContentProps={{
+                        'aria-describedby': 'message-id',
+                    }}
+                    message={<span id="message-id">{this.state.errorMessage}</span>}
+                />
+            </div >
+        );
     }
 }
 
-export default ComprarEntrada

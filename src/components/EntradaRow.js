@@ -27,11 +27,11 @@ export class EntradaRow extends Component {
     async initialize() {
         try {
             const usuario = await usuariosService.getUsuarioByID(USRID)
-            const res = await this.entradasService.getEntradasUsr(USRID)
-            const entradas = await res.json()
+            // const res = await this.entradasService.getEntradasUsr(USRID)
+            // const entradas = await res.json()
             this.setState({
                 usuario: usuario,
-                entradas: entradas
+                // entradas: entradas
             })
         } catch (e) {
             this.generarError(e)
@@ -49,23 +49,11 @@ export class EntradaRow extends Component {
         try {
             this.state.usuario.validarDevolucion(entrada)
             await usuariosService.actualizarUsuarioID(USRID, entrada)
-            // this.eliminarEntrada(entrada)
+            this.props.eliminarEntrada(entrada.id)
         } catch (e) {
             this.generarError(e)
         }
     }
-
-    // cambiarEstado(closureChange) {
-    //     const usuario = this.state.usuario
-    //     closureChange(usuario)
-    //     this.setState({
-    //         usuario: usuario
-    //     })
-    // }
-
-    // eliminarEntrada(entrada) {
-    //     this.cambiarEstado((usuario) => usuario.devolverEntrada(entrada))
-    // }
 
     render() {
         const entrada = this.props.entrada

@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Toolbars from './components/Toolbars';
-import { ComprarEntrada } from './components/ComprarEntrada';
 import { EventoList } from './components/EventoList';
 import { MisEntradas } from './components/MisEntradas';
+import { ComprarEntrada } from './components/ComprarEntrada'
 
 const styles = {
     pantalla: {
@@ -17,7 +17,7 @@ export const EventosRoutes = () => (
             <div style={styles.pantalla}>
                 <Switch>
                     <Route exact path="/" component={EventoList} />
-                    <Route path="/ComprarEntrada/:id" component={ComprarEntrada} />
+                    <Route path="/comprar-entrada/:id" component={ComprarEntrada} />
                     <Route path="/mis-entradas" component={MisEntradas} />
                 </Switch>
             </div>

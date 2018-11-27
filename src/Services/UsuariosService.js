@@ -13,8 +13,15 @@ export class UsuariosService {
         return Usuario.fromJson(usuarioJson)
     }
 
-    actualizarUsuarioID(USRID, entrada) {
-        return fetch(REST_SERVER_URL + "/usuarios/" + USRID, {
+    actualizarUsuarioID(id, entrada) {
+        return fetch(REST_SERVER_URL + "/usuarios/" + id, {
+            method: 'put',
+            body: JSON.stringify(entrada.toJSON())
+        })
+    }
+
+    usuarioCompraEntrada(id, entrada) {
+        return fetch(REST_SERVER_URL + "/usuarios/" + id + "/compra-entradas", {
             method: 'put',
             body: JSON.stringify(entrada.toJSON())
         })
