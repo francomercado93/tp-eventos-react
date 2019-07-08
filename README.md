@@ -1,3 +1,14 @@
+# Tp-eventos-React
+
+App web mobile, cuya principal funcionalidad consistirá en la compra de entradas para eventos abiertos.
+Enunciado del tp:
+
+https://docs.google.com/document/d/16YhemX-0zvpgZ2kPGbVTOUgMtU1D6iM-FR14lbEOG0A/edit
+
+Backend de la aplicacion(branch BackendReact):
+
+https://github.com/francomercado93/tp-eventos-backend
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
