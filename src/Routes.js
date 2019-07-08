@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Toolbars from './components/Toolbars';
-import { EventoList } from './components/EventoList';
-import { MisEntradas } from './components/MisEntradas';
-import { ComprarEntrada } from './components/ComprarEntrada'
+import Toolbars from './Components/Toolbars';
+import { EventoList } from './Components/EventoList'
+import { MisEntradas } from './Components/MisEntradas'
+import { ComprarEntrada } from './Components/ComprarEntrada'
 
 const styles = {
     pantalla: {

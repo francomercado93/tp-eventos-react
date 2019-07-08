@@ -1,7 +1,7 @@
 import Paper from '@material-ui/core/Paper';
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { EventosRow } from '../components/EventoRow';
+import { EventosRow } from '../Components/EventoRow';
 import { Evento } from '../Domain/Evento';
 import { USRID } from '../Services/configuration';
 import { EventosService } from "../Services/EventosService";
